@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
 import { 
   ArrowRight, 
   TrendingUp, 
@@ -28,7 +28,11 @@ import {
   Box,
   Camera,
   Wand2,
-  Package
+  Package,
+  Menu,
+  X,
+  MessageCircle,
+  Quote
 } from 'lucide-react'
 
 // ============================================
@@ -111,41 +115,100 @@ function ScaleText({ children, className = '' }: { children: React.ReactNode, cl
 // HEADER
 // ============================================
 function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  
+  const navLinks = [
+    { href: '#demo', label: 'Como Funciona' },
+    { href: '#beneficios', label: 'Benefícios' },
+    { href: '#integracoes', label: 'Integrações' },
+    { href: '#contato', label: 'Contato' },
+  ]
+  
   return (
-    <motion.header 
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      className="fixed top-0 left-0 right-0 z-50"
-    >
-      <div className="mx-6 mt-4">
-        <div className="max-w-7xl mx-auto px-6 py-4 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
-                <Eye className="w-5 h-5 text-white" />
+    <>
+      <motion.header 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="fixed top-0 left-0 right-0 z-50"
+      >
+        <div className="mx-4 md:mx-6 mt-4">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10">
+            <div className="flex items-center justify-between">
+              <a href="/" className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
+                  <Eye className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl md:text-2xl font-bold text-white">look.me</span>
+              </a>
+              
+              <nav className="hidden md:flex items-center gap-8">
+                {navLinks.map(link => (
+                  <a key={link.href} href={link.href} className="text-white/60 hover:text-white transition-colors text-sm font-medium">
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+              
+              <div className="flex items-center gap-3">
+                <a 
+                  href="#contato" 
+                  className="hidden sm:flex group items-center gap-2 px-5 py-2.5 bg-white text-black rounded-full font-semibold text-sm hover:bg-white/90 transition-all"
+                >
+                  Agendar Demo
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+                
+                {/* Mobile menu button */}
+                <button 
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-white"
+                  aria-label="Menu"
+                >
+                  {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
               </div>
-              <span className="text-2xl font-bold text-white">look.me</span>
-            </a>
-            
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="#solucao" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Solução</a>
-              <a href="#beneficios" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Benefícios</a>
-              <a href="#demo" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Demo</a>
-              <a href="#integracoes" className="text-white/60 hover:text-white transition-colors text-sm font-medium">Integrações</a>
-            </nav>
-            
-            <a 
-              href="#contato" 
-              className="group flex items-center gap-2 px-5 py-2.5 bg-white text-black rounded-full font-semibold text-sm hover:bg-white/90 transition-all"
-            >
-              Agendar Demo
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.header>
+      </motion.header>
+      
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-4 top-24 z-40 md:hidden"
+          >
+            <div className="rounded-2xl bg-black/90 backdrop-blur-xl border border-white/10 p-6">
+              <nav className="flex flex-col gap-4">
+                {navLinks.map(link => (
+                  <a 
+                    key={link.href}
+                    href={link.href} 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-white/80 hover:text-white transition-colors text-lg font-medium py-2"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <a 
+                  href="#contato"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-full font-semibold mt-2"
+                >
+                  Agendar Demo Gratuita
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 
@@ -290,25 +353,25 @@ function IntroText() {
     offset: ["start end", "end start"]
   })
   
-  const opacity1 = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.5], [0, 1, 1, 0])
-  const opacity2 = useTransform(scrollYProgress, [0.3, 0.5, 0.7, 0.8], [0, 1, 1, 0])
-  const scale1 = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.5], [0.8, 1, 1, 1.1])
-  const scale2 = useTransform(scrollYProgress, [0.3, 0.5, 0.7, 0.8], [0.8, 1, 1, 1.1])
+  const opacity1 = useTransform(scrollYProgress, [0, 0.25, 0.45, 0.55], [0, 1, 1, 0])
+  const opacity2 = useTransform(scrollYProgress, [0.45, 0.55, 0.85, 1], [0, 1, 1, 0])
+  const scale1 = useTransform(scrollYProgress, [0, 0.25, 0.45, 0.55], [0.9, 1, 1, 1.05])
+  const scale2 = useTransform(scrollYProgress, [0.45, 0.55, 0.85, 1], [0.9, 1, 1, 1.05])
   
   return (
-    <section ref={ref} className="relative h-[300vh]">
+    <section ref={ref} className="relative h-[200vh]">
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-violet-950/20 to-black" />
         
         <motion.div style={{ opacity: opacity1, scale: scale1 }} className="absolute text-center px-6">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white max-w-5xl">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white max-w-5xl">
             Seu cliente quer experimentar
           </h2>
-          <p className="text-2xl md:text-4xl text-white/40 mt-4">— mas não pode.</p>
+          <p className="text-xl md:text-3xl lg:text-4xl text-white/40 mt-4">— mas não pode.</p>
         </motion.div>
         
         <motion.div style={{ opacity: opacity2, scale: scale2 }} className="absolute text-center px-6">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold max-w-5xl">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold max-w-5xl">
             <span className="text-white">Com o </span>
             <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">look.me</span>
             <span className="text-white">, ele pode.</span>
@@ -361,28 +424,130 @@ function Stats() {
 }
 
 // ============================================
+// BEFORE/AFTER COMPARISON
+// ============================================
+function BeforeAfter() {
+  const [sliderPosition, setSliderPosition] = useState(50)
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = clientX - rect.left
+    const percentage = Math.min(Math.max((x / rect.width) * 100, 5), 95)
+    setSliderPosition(percentage)
+  }
+  
+  return (
+    <div 
+      ref={containerRef}
+      className="relative aspect-[3/4] md:aspect-[4/5] max-w-md mx-auto rounded-2xl overflow-hidden cursor-ew-resize select-none border border-white/10"
+      onMouseMove={(e) => handleMove(e.clientX)}
+      onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+    >
+      {/* Before - Original photo */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-4 rounded-full bg-gray-700/50 border-2 border-dashed border-gray-600 flex items-center justify-center">
+            <Users className="w-16 h-16 text-gray-500" />
+          </div>
+          <p className="text-gray-400 font-medium">Foto Original</p>
+        </div>
+      </div>
+      
+      {/* After - With clothing */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-violet-900/80 to-purple-900/80 flex items-center justify-center"
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      >
+        <div className="text-center">
+          <div className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-4 rounded-full bg-violet-600/30 border-2 border-violet-500/50 flex items-center justify-center relative overflow-hidden">
+            <Users className="w-16 h-16 text-violet-300" />
+            <Shirt className="w-10 h-10 text-violet-400 absolute bottom-2 right-2" />
+          </div>
+          <p className="text-violet-300 font-medium">Com a Roupa</p>
+        </div>
+      </div>
+      
+      {/* Slider */}
+      <div 
+        className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
+        style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+      >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
+          <div className="flex gap-0.5">
+            <ChevronDown className="w-4 h-4 text-gray-800 rotate-90" />
+            <ChevronDown className="w-4 h-4 text-gray-800 -rotate-90" />
+          </div>
+        </div>
+      </div>
+      
+      {/* Labels */}
+      <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur text-white text-xs font-medium">
+        Antes
+      </div>
+      <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-violet-600/80 backdrop-blur text-white text-xs font-medium">
+        Depois
+      </div>
+    </div>
+  )
+}
+
+// ============================================
 // DEMO SECTION
 // ============================================
 function Demo() {
   return (
-    <section id="demo" className="py-32 relative overflow-hidden">
+    <section id="demo" className="py-24 md:py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-violet-950/10 to-black" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-[200px]" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <AnimatedText className="text-center mb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+        <AnimatedText className="text-center mb-16 md:mb-20">
           <p className="text-violet-400 font-medium mb-4 tracking-widest uppercase text-sm">Como funciona</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
             Simples assim
           </h2>
-          <p className="text-xl text-white/40 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto">
             3 passos para seu cliente experimentar qualquer peça
           </p>
         </AnimatedText>
         
+        {/* Before/After Showcase */}
+        <AnimatedText className="mb-16 md:mb-20">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <BeforeAfter />
+              <p className="text-center text-white/30 text-sm mt-4">
+                ← Arraste para comparar →
+              </p>
+            </div>
+            <div className="order-1 md:order-2 text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                Resultado em <span className="text-violet-400">segundos</span>
+              </h3>
+              <p className="text-white/50 text-lg mb-6">
+                Nossa IA processa a foto do cliente e veste a roupa escolhida de forma realista, 
+                respeitando corpo, pose e iluminação.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                <span className="px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-sm">
+                  Processamento em 3s
+                </span>
+                <span className="px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-sm">
+                  Alta fidelidade
+                </span>
+                <span className="px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-sm">
+                  Qualquer roupa
+                </span>
+              </div>
+            </div>
+          </div>
+        </AnimatedText>
+        
         {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-20">
           {[
             { 
               icon: Camera, 
@@ -410,14 +575,14 @@ function Demo() {
                   <div className="hidden md:block absolute top-16 left-full w-full h-[2px] bg-gradient-to-r from-violet-500/50 to-transparent" />
                 )}
                 
-                <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-violet-500/30 transition-all group-hover:-translate-y-2">
+                <div className="p-6 md:p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-violet-500/30 transition-all group-hover:-translate-y-2">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/20 flex items-center justify-center">
-                      <item.icon className="w-8 h-8 text-violet-400" />
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 border border-violet-500/20 flex items-center justify-center">
+                      <item.icon className="w-7 h-7 md:w-8 md:h-8 text-violet-400" />
                     </div>
-                    <span className="text-5xl font-bold text-white/10">{item.step}</span>
+                    <span className="text-4xl md:text-5xl font-bold text-white/10">{item.step}</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{item.title}</h3>
                   <p className="text-white/40">{item.desc}</p>
                 </div>
               </div>
@@ -578,6 +743,64 @@ function Benefits() {
                 
                 {/* Hover glow */}
                 <div className={`absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br ${benefit.color} opacity-0 group-hover:opacity-10 rounded-full blur-3xl transition-opacity`} />
+              </div>
+            </AnimatedText>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================
+// TESTIMONIALS
+// ============================================
+function Testimonials() {
+  const testimonials = [
+    {
+      quote: "Depois de implementar o look.me, nossa taxa de devolução caiu 35%. Os clientes finalmente sabem o que estão comprando.",
+      author: "Marina Santos",
+      role: "E-commerce Manager",
+      company: "ModaViva",
+    },
+    {
+      quote: "A integração levou 15 minutos. Em uma semana, já vimos aumento de 28% na conversão das páginas de produto.",
+      author: "Ricardo Almeida", 
+      role: "CTO",
+      company: "StyleBR",
+    },
+    {
+      quote: "Nossos clientes adoram! O engajamento no site triplicou e o tempo médio na página de produto aumentou 4x.",
+      author: "Carla Mendes",
+      role: "Head of Product",
+      company: "Elegance Store",
+    },
+  ]
+  
+  return (
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-violet-950/5 to-black" />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+        <AnimatedText className="text-center mb-16 md:mb-20">
+          <p className="text-violet-400 font-medium mb-4 tracking-widest uppercase text-sm">Depoimentos</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            O que nossos clientes dizem
+          </h2>
+        </AnimatedText>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((testimonial, index) => (
+            <AnimatedText key={index} delay={index * 0.1}>
+              <div className="group relative p-6 md:p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-violet-500/20 transition-all h-full">
+                <Quote className="w-10 h-10 text-violet-500/30 mb-4" />
+                <p className="text-white/70 text-lg mb-6 leading-relaxed">
+                  "{testimonial.quote}"
+                </p>
+                <div className="mt-auto">
+                  <p className="text-white font-semibold">{testimonial.author}</p>
+                  <p className="text-white/40 text-sm">{testimonial.role} • {testimonial.company}</p>
+                </div>
               </div>
             </AnimatedText>
           ))}
@@ -764,6 +987,31 @@ function Footer() {
 }
 
 // ============================================
+// WHATSAPP FLOATING BUTTON
+// ============================================
+function WhatsAppButton() {
+  return (
+    <motion.a
+      href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre o look.me"
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 2, type: "spring", stiffness: 200 }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      className="fixed bottom-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-shadow"
+      aria-label="Fale conosco no WhatsApp"
+    >
+      <MessageCircle className="w-7 h-7 md:w-8 md:h-8 text-white" />
+      
+      {/* Pulse animation */}
+      <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20" />
+    </motion.a>
+  )
+}
+
+// ============================================
 // MAIN PAGE
 // ============================================
 export default function Home() {
@@ -775,9 +1023,11 @@ export default function Home() {
       <Stats />
       <Demo />
       <Benefits />
+      <Testimonials />
       <Integrations />
       <FinalCTA />
       <Footer />
+      <WhatsAppButton />
     </main>
   )
 }
