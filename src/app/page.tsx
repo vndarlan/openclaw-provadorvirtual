@@ -567,10 +567,20 @@ function ImpactROI() {
 // ============================================
 function HowItWorks() {
   const [activeOutfit, setActiveOutfit] = useState(0)
+  const [sliderPosition, setSliderPosition] = useState(50)
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = clientX - rect.left
+    const percentage = Math.min(Math.max((x / rect.width) * 100, 5), 95)
+    setSliderPosition(percentage)
+  }
   
   const outfits = [
-    { result: '/demo/model-outfit1.png', label: 'Look 1 - Cardigan Mostarda' },
-    { result: '/demo/model-outfit2.png', label: 'Look 2 - Blusa Preta' },
+    { before: '/demo/model-outfit2.png', after: '/demo/model-outfit1.png', label: 'Look 1 - Cardigan Mostarda' },
+    { before: '/demo/model-outfit1.png', after: '/demo/model-outfit2.png', label: 'Look 2 - Blusa Preta' },
   ]
   
   const steps = [
@@ -625,7 +635,7 @@ function HowItWorks() {
               </div>
             </div>
             
-            {/* Lado Direito - Resultado */}
+            {/* Lado Direito - Resultado com Slider Antes/Depois */}
             <div className="order-1 lg:order-2">
               <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20">
                 <div className="flex items-center justify-between mb-6">
@@ -639,22 +649,58 @@ function HowItWorks() {
                   </div>
                 </div>
                 
-                {/* Imagem do resultado */}
-                <div className="relative rounded-2xl overflow-hidden bg-gray-100 mb-6">
+                {/* Slider Antes/Depois */}
+                <div 
+                  ref={containerRef}
+                  className="relative rounded-2xl overflow-hidden bg-gray-100 mb-4 cursor-ew-resize select-none"
+                  onMouseMove={(e) => handleMove(e.clientX)}
+                  onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+                >
+                  {/* Imagem ANTES (fundo) */}
                   <img 
-                    src={outfits[activeOutfit].result} 
-                    alt="Modelo vestindo o outfit" 
+                    src={outfits[activeOutfit].before} 
+                    alt="Antes - Foto original" 
                     className="w-full h-auto"
                   />
                   
-                  {/* Badge de IA */}
+                  {/* Imagem DEPOIS (sobreposta com clip) */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                  >
+                    <img 
+                      src={outfits[activeOutfit].after} 
+                      alt="Depois - Com a roupa" 
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  
+                  {/* Labels Antes/Depois */}
+                  <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
+                    <span className="text-white text-xs font-medium">Antes</span>
+                  </div>
                   <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
                     <span className="text-white text-xs font-medium flex items-center gap-1.5">
                       <Sparkles className="w-3 h-3" />
-                      Gerado por IA
+                      Depois
                     </span>
                   </div>
+                  
+                  {/* Linha do Slider */}
+                  <div 
+                    className="absolute top-0 bottom-0 w-1 bg-white shadow-lg"
+                    style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+                  >
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
+                      <div className="flex gap-0.5">
+                        <ChevronDown className="w-4 h-4 text-primary rotate-90" />
+                        <ChevronDown className="w-4 h-4 text-primary -rotate-90" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                
+                <p className="text-center text-white/50 text-sm mb-4">← Arraste para comparar →</p>
                 
                 {/* Toggle entre looks */}
                 <div className="flex gap-3">
