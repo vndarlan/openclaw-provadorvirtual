@@ -821,10 +821,10 @@ function WhatMakesUsUnique() {
 // ============================================
 function Integrations() {
   const integrations = [
-    { name: 'Shopify', icon: Store, color: 'text-green-600' },
-    { name: 'Nuvemshop', icon: Globe, color: 'text-violet-600' },
-    { name: 'VTEX', icon: Box, color: 'text-pink-600' },
-    { name: 'Código Próprio', icon: Code2, color: 'text-gray-600' },
+    { name: 'Shopify', logo: '/logos/shopify.svg' },
+    { name: 'Nuvemshop', logo: '/logos/nuvemshop.svg' },
+    { name: 'VTEX', logo: '/logos/vtex.svg' },
+    { name: 'WooCommerce', logo: '/logos/woocommerce.svg' },
   ]
   
   return (
@@ -840,12 +840,16 @@ function Integrations() {
           </p>
         </AnimatedText>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-3xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-4xl mx-auto">
           {integrations.map((integration, index) => (
             <AnimatedText key={index} delay={index * 0.05}>
-              <div className="group p-6 rounded-2xl bg-backgroundAlt border border-black/5 hover:border-primary/20 transition-all text-center hover:-translate-y-1 hover:shadow-soft">
-                <div className="w-14 h-14 rounded-xl bg-white border border-black/5 flex items-center justify-center mx-auto mb-3 group-hover:border-primary/20 transition-all">
-                  <integration.icon className={`w-7 h-7 ${integration.color}`} />
+              <div className="group p-6 md:p-8 rounded-2xl bg-backgroundAlt border border-black/5 hover:border-primary/20 transition-all text-center hover:-translate-y-1 hover:shadow-soft">
+                <div className="h-12 md:h-16 flex items-center justify-center mx-auto mb-4">
+                  <img 
+                    src={integration.logo} 
+                    alt={`Logo ${integration.name}`} 
+                    className="h-full w-auto max-w-[120px] object-contain"
+                  />
                 </div>
                 <p className="text-textDark font-semibold">{integration.name}</p>
               </div>
