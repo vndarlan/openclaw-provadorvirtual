@@ -754,9 +754,9 @@ function WhatMakesUsUnique() {
 // ============================================
 function Integrations() {
   const integrations = [
-    { name: 'Shopify', icon: Store },
-    { name: 'Nuvemshop', icon: Globe },
-    { name: 'VTEX', icon: Box },
+    { name: 'Shopify', logo: '/logos/shopify.svg' },
+    { name: 'Nuvemshop', logo: '/logos/nuvemshop.svg' },
+    { name: 'VTEX', logo: '/logos/vtex.svg' },
     { name: 'Código Próprio', icon: Code2 },
   ]
   
@@ -777,8 +777,18 @@ function Integrations() {
           {integrations.map((integration, index) => (
             <AnimatedText key={index} delay={index * 0.05}>
               <div className="group p-6 rounded-2xl bg-backgroundAlt border border-black/5 hover:border-primary/20 transition-all text-center hover:-translate-y-1 hover:shadow-soft">
-                <div className="w-14 h-14 rounded-xl bg-white border border-black/5 flex items-center justify-center mx-auto mb-4 group-hover:border-primary/20 transition-all">
-                  <integration.icon className="w-7 h-7 text-textMuted group-hover:text-primary transition-colors" />
+                <div className="h-12 flex items-center justify-center mx-auto mb-4">
+                  {integration.logo ? (
+                    <img 
+                      src={integration.logo} 
+                      alt={integration.name} 
+                      className="h-8 md:h-10 w-auto object-contain"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-xl bg-white border border-black/5 flex items-center justify-center group-hover:border-primary/20 transition-all">
+                      {integration.icon && <integration.icon className="w-7 h-7 text-textMuted group-hover:text-primary transition-colors" />}
+                    </div>
+                  )}
                 </div>
                 <p className="text-textDark font-medium">{integration.name}</p>
               </div>
