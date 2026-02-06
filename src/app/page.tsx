@@ -566,21 +566,17 @@ function ImpactROI() {
 // COMO FUNCIONA SECTION
 // ============================================
 function HowItWorks() {
-  const [sliderPosition, setSliderPosition] = useState(50)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [activeOutfit, setActiveOutfit] = useState(0)
   
-  const handleMove = (clientX: number) => {
-    if (!containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const x = clientX - rect.left
-    const percentage = Math.min(Math.max((x / rect.width) * 100, 5), 95)
-    setSliderPosition(percentage)
-  }
+  const outfits = [
+    { result: '/demo/model-outfit1.png', label: 'Look 1 - Cardigan Mostarda' },
+    { result: '/demo/model-outfit2.png', label: 'Look 2 - Blusa Preta' },
+  ]
   
   const steps = [
-    { icon: Camera, step: '01', title: 'Upload da foto', desc: 'Cliente faz upload de uma foto de corpo inteiro' },
-    { icon: Wand2, step: '02', title: 'IA processa', desc: 'Nossa IA veste a roupa na pessoa em segundos' },
-    { icon: ShoppingCart, step: '03', title: 'Compra com confiança', desc: 'Visualiza o resultado e compra sem dúvidas' },
+    { icon: Shirt, step: '01', title: 'Escolha a peça', desc: 'Cliente seleciona a roupa que quer experimentar' },
+    { icon: Camera, step: '02', title: 'Upload da foto', desc: 'Faz upload de uma foto de corpo inteiro' },
+    { icon: Wand2, step: '03', title: 'IA veste', desc: 'Nossa IA veste a roupa na pessoa em segundos' },
   ]
   
   return (
@@ -596,71 +592,96 @@ function HowItWorks() {
           </p>
         </AnimatedText>
         
-        {/* Before/After */}
+        {/* Demo Visual - Peças + Resultado */}
         <AnimatedText className="mb-16 md:mb-20">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="order-2 md:order-1">
-              <div 
-                ref={containerRef}
-                className="relative aspect-[3/4] max-w-sm mx-auto rounded-2xl overflow-hidden cursor-ew-resize select-none border-2 border-white/30 shadow-glow-white"
-                onMouseMove={(e) => handleMove(e.clientX)}
-                onTouchMove={(e) => handleMove(e.touches[0].clientX)}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-28 h-28 mx-auto mb-4 rounded-full bg-gray-400/30 border-2 border-dashed border-gray-400 flex items-center justify-center">
-                      <Users className="w-14 h-14 text-gray-500" />
-                    </div>
-                    <p className="text-gray-600 font-medium">Foto Original</p>
-                  </div>
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Lado Esquerdo - Peças da Loja */}
+            <div className="order-2 lg:order-1">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20">
+                <div className="flex items-center gap-2 mb-6">
+                  <Store className="w-5 h-5 text-white/70" />
+                  <span className="text-white/70 text-sm font-medium">Catálogo da Loja</span>
                 </div>
                 
-                <div 
-                  className="absolute inset-0 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center"
-                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                >
-                  <div className="text-center">
-                    <div className="w-28 h-28 mx-auto mb-4 rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center relative">
-                      <Users className="w-14 h-14 text-white" />
-                      <Shirt className="w-8 h-8 text-white/80 absolute bottom-1 right-1" />
-                    </div>
-                    <p className="text-white font-medium">Com a Roupa</p>
-                  </div>
+                {/* Imagem das peças */}
+                <div className="relative rounded-2xl overflow-hidden bg-gray-100 mb-6">
+                  <img 
+                    src="/demo/outfit-pieces.png" 
+                    alt="Peças de roupa - Cardigan, calça e botas" 
+                    className="w-full h-auto"
+                  />
                 </div>
                 
-                <div 
-                  className="absolute top-0 bottom-0 w-1 bg-white shadow-glow-white"
-                  style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
-                >
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
-                    <div className="flex gap-0.5">
-                      <ChevronDown className="w-4 h-4 text-primary rotate-90" />
-                      <ChevronDown className="w-4 h-4 text-primary -rotate-90" />
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-white font-semibold">Outfit Completo</p>
+                    <p className="text-white/60 text-sm">Cardigan + Calça + Botas</p>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white text-sm">
+                    <Sparkles className="w-4 h-4" />
+                    Experimentar
                   </div>
                 </div>
               </div>
-              <p className="text-center text-white/50 text-sm mt-4">← Arraste para comparar →</p>
             </div>
             
-            <div className="order-1 md:order-2 text-center md:text-left">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Resultado em segundos
-              </h3>
-              <p className="text-white/70 text-lg mb-6">
-                Nossa IA processa a foto do cliente e veste a roupa escolhida de forma realista, 
-                respeitando corpo, pose e iluminação.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm">
-                  <Zap className="w-4 h-4 inline mr-2" />
-                  Processamento em 3s
-                </span>
-                <span className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm">
-                  <Target className="w-4 h-4 inline mr-2" />
-                  Alta fidelidade
-                </span>
+            {/* Lado Direito - Resultado */}
+            <div className="order-1 lg:order-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Wand2 className="w-5 h-5 text-white/70" />
+                    <span className="text-white/70 text-sm font-medium">Resultado da IA</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-green-400 text-xs font-medium">Processado em 3s</span>
+                  </div>
+                </div>
+                
+                {/* Imagem do resultado */}
+                <div className="relative rounded-2xl overflow-hidden bg-gray-100 mb-6">
+                  <img 
+                    src={outfits[activeOutfit].result} 
+                    alt="Modelo vestindo o outfit" 
+                    className="w-full h-auto"
+                  />
+                  
+                  {/* Badge de IA */}
+                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
+                    <span className="text-white text-xs font-medium flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3" />
+                      Gerado por IA
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Toggle entre looks */}
+                <div className="flex gap-3">
+                  {outfits.map((outfit, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveOutfit(index)}
+                      className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                        activeOutfit === index
+                          ? 'bg-white text-primary'
+                          : 'bg-white/10 text-white/70 hover:bg-white/20'
+                      }`}
+                    >
+                      {outfit.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+            </div>
+          </div>
+          
+          {/* Seta conectando */}
+          <div className="hidden lg:flex justify-center -mt-4 mb-4">
+            <div className="flex items-center gap-4 text-white/50">
+              <div className="w-32 h-[2px] bg-gradient-to-r from-transparent to-white/30" />
+              <ArrowRight className="w-6 h-6 text-white/50" />
+              <div className="w-32 h-[2px] bg-gradient-to-l from-transparent to-white/30" />
             </div>
           </div>
         </AnimatedText>

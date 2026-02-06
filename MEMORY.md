@@ -40,8 +40,8 @@
 
 ## Repositório
 
-- **GitHub:** `vndarlan/openclaw-provadorvirtual`
-- **URL:** https://github.com/vndarlan/openclaw-provadorvirtual
+- **GitHub:** `vndarlan/provadorvirtual-landingpage`
+- **URL:** https://github.com/vndarlan/provadorvirtual-landingpage
 - **Local:** `/home/clawd/.openclaw/workspace/look.me/repo/`
 
 ## Stack (definida)
