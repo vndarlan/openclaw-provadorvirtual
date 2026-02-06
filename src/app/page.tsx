@@ -755,11 +755,9 @@ function WhatMakesUsUnique() {
 function Integrations() {
   const integrations = [
     { name: 'Shopify', icon: Store },
-    { name: 'WooCommerce', icon: Package },
-    { name: 'VTEX', icon: Box },
     { name: 'Nuvemshop', icon: Globe },
-    { name: 'Magento', icon: Layers },
-    { name: 'API Custom', icon: Code2 },
+    { name: 'VTEX', icon: Box },
+    { name: 'Código Próprio', icon: Code2 },
   ]
   
   return (
@@ -775,7 +773,7 @@ function Integrations() {
           </p>
         </AnimatedText>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-3xl mx-auto">
           {integrations.map((integration, index) => (
             <AnimatedText key={index} delay={index * 0.05}>
               <div className="group p-6 rounded-2xl bg-backgroundAlt border border-black/5 hover:border-primary/20 transition-all text-center hover:-translate-y-1 hover:shadow-soft">
