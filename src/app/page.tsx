@@ -306,8 +306,8 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-lg md:text-xl text-white/70 mb-12 max-w-2xl mx-auto"
         >
-          Provador virtual inteligente. Mais conversão. Menos devolução.<br/>
-          Resultados incomparáveis.
+          A experiência da loja física no digital.<br/>
+          Ofereça a segurança do provador físico com a escalabilidade do e-commerce.
         </motion.p>
         
         {/* CTA */}
@@ -687,18 +687,18 @@ function WhatMakesUsUnique() {
   const items = [
     {
       icon: Target,
-      title: 'Mais do que imagens, oferecemos experiências.',
-      desc: 'Nosso valor reside não apenas em gerar imagens de produtos em modelos, mas em criar experiências imersivas que dão vida a esses elementos visuais.',
+      title: 'Tecnologia antes exclusiva de grandes marcas',
+      desc: 'Provadores virtuais com IA eram acessíveis apenas para gigantes do varejo. Agora, qualquer loja pode oferecer essa experiência aos seus clientes.',
     },
     {
       icon: Layers,
       title: 'Precisão de Caimento e Tamanho',
-      desc: 'Nosso motor de geração de imagens usa dados precisos de tamanho para cada peça em todos os tamanhos, garantindo visuais que correspondem perfeitamente às dimensões reais dos seus produtos.',
+      desc: 'Nosso motor de geração de imagens usa dados precisos de tamanho para cada peça, garantindo visuais que correspondem perfeitamente às dimensões reais dos seus produtos.',
     },
     {
       icon: Sparkles,
       title: 'Qualidade de Imagem Incomparável',
-      desc: 'Utilizando processos avançados de geração, entregamos visuais com iluminação excepcional, caimento e representação de materiais, garantindo uma experiência visual ideal.',
+      desc: 'Utilizando processos avançados de geração, entregamos visuais com iluminação excepcional, caimento e representação de materiais realistas.',
     },
   ]
   
