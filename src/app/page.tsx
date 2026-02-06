@@ -387,39 +387,6 @@ function Hero() {
 }
 
 // ============================================
-// VIDEO SECTION (COMECE AQUI)
-// ============================================
-function VideoSection() {
-  return (
-    <section className="py-24 md:py-32 bg-white">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
-        <AnimatedText>
-          <SectionLabel>Comece Aqui</SectionLabel>
-          <h2 className="text-3xl md:text-5xl font-bold text-textDark mb-6">
-            2 minutos para entender<br/>como tudo funciona
-          </h2>
-          <p className="text-lg text-textMuted mb-12">
-            O que fazemos, por que importa — e como isso muda o jogo.
-          </p>
-          
-          {/* Video placeholder */}
-          <div className="relative aspect-video rounded-2xl overflow-hidden bg-backgroundAlt border border-black/5 shadow-soft-lg">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="group w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 hover:scale-110 transition-transform">
-                <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="white" />
-              </button>
-            </div>
-            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-textMuted text-sm">
-              Adicione seu vídeo explicativo
-            </p>
-          </div>
-        </AnimatedText>
-      </div>
-    </section>
-  )
-}
-
-// ============================================
 // O QUE FAZEMOS SECTION
 // ============================================
 function WhatWeDo() {
@@ -595,144 +562,120 @@ function HowItWorks() {
         <AnimatedText className="text-center mb-16 md:mb-20">
           <SectionLabel light>Como Funciona</SectionLabel>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Simples assim
+            2 minutos para entender tudo
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            3 passos para seu cliente experimentar qualquer peça
+            O que fazemos, por que importa — e como isso muda o jogo.
           </p>
         </AnimatedText>
         
-        {/* Demo Visual - Peças + Resultado */}
+        {/* Video + Demo side by side */}
         <AnimatedText className="mb-16 md:mb-20">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* Lado Esquerdo - Peças da Loja */}
-            <div className="order-2 lg:order-1">
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20">
-                <div className="flex items-center gap-2 mb-6">
-                  <Store className="w-5 h-5 text-white/70" />
-                  <span className="text-white/70 text-sm font-medium">Catálogo da Loja</span>
-                </div>
-                
-                {/* Imagem das peças */}
-                <div className="relative rounded-2xl overflow-hidden bg-gray-100 mb-6">
-                  <img 
-                    src="/demo/outfit-pieces.png" 
-                    alt="Peças de roupa - Cardigan, calça e botas" 
-                    className="w-full h-auto"
-                  />
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-white font-semibold">Outfit Completo</p>
-                    <p className="text-white/60 text-sm">Cardigan + Calça + Botas</p>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white text-sm">
-                    <Sparkles className="w-4 h-4" />
-                    Experimentar
-                  </div>
-                </div>
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
+            {/* Vídeo Explicativo */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20 flex flex-col">
+              <div className="flex items-center gap-2 mb-6">
+                <Play className="w-5 h-5 text-white/70" />
+                <span className="text-white/70 text-sm font-medium">Vídeo Explicativo</span>
+              </div>
+              
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-black/30 flex-1 flex items-center justify-center">
+                <button className="group w-20 h-20 md:w-24 md:h-24 rounded-full bg-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                  <Play className="w-8 h-8 md:w-10 md:h-10 text-primary ml-1" fill="currentColor" />
+                </button>
+                <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-sm">
+                  Adicione seu vídeo explicativo
+                </p>
               </div>
             </div>
             
-            {/* Lado Direito - Resultado com Slider Antes/Depois */}
-            <div className="order-1 lg:order-2">
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-2">
-                    <Wand2 className="w-5 h-5 text-white/70" />
-                    <span className="text-white/70 text-sm font-medium">Resultado da IA</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
-                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-green-400 text-xs font-medium">Processado em 3s</span>
-                  </div>
+            {/* Resultado com Slider Antes/Depois */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/20 flex flex-col">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-2">
+                  <Wand2 className="w-5 h-5 text-white/70" />
+                  <span className="text-white/70 text-sm font-medium">Resultado da IA</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
+                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span className="text-green-400 text-xs font-medium">Processado em 3s</span>
+                </div>
+              </div>
+              
+              {/* Slider Antes/Depois */}
+              <div 
+                ref={containerRef}
+                className="relative rounded-2xl overflow-hidden bg-gray-100 mb-4 cursor-ew-resize select-none flex-1"
+                onMouseMove={(e) => handleMove(e.clientX)}
+                onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+              >
+                {/* Imagem ANTES (fundo) */}
+                <img 
+                  src={outfits[activeOutfit].before} 
+                  alt="Antes - Foto original" 
+                  className="w-full h-full object-cover"
+                />
+                
+                {/* Imagem DEPOIS (sobreposta com clip) */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                >
+                  <img 
+                    src={outfits[activeOutfit].after} 
+                    alt="Depois - Com a roupa" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 
-                {/* Slider Antes/Depois */}
+                {/* Labels Antes/Depois */}
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
+                  <span className="text-white text-xs font-medium">Antes</span>
+                </div>
+                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
+                  <span className="text-white text-xs font-medium flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3" />
+                    Depois
+                  </span>
+                </div>
+                
+                {/* Linha do Slider */}
                 <div 
-                  ref={containerRef}
-                  className="relative rounded-2xl overflow-hidden bg-gray-100 mb-4 cursor-ew-resize select-none"
-                  onMouseMove={(e) => handleMove(e.clientX)}
-                  onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+                  className="absolute top-0 bottom-0 w-1 bg-white shadow-lg"
+                  style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
                 >
-                  {/* Imagem ANTES (fundo) */}
-                  <img 
-                    src={outfits[activeOutfit].before} 
-                    alt="Antes - Foto original" 
-                    className="w-full h-auto"
-                  />
-                  
-                  {/* Imagem DEPOIS (sobreposta com clip) */}
-                  <div 
-                    className="absolute inset-0"
-                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                  >
-                    <img 
-                      src={outfits[activeOutfit].after} 
-                      alt="Depois - Com a roupa" 
-                      className="w-full h-auto"
-                    />
-                  </div>
-                  
-                  {/* Labels Antes/Depois */}
-                  <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
-                    <span className="text-white text-xs font-medium">Antes</span>
-                  </div>
-                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/20">
-                    <span className="text-white text-xs font-medium flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3" />
-                      Depois
-                    </span>
-                  </div>
-                  
-                  {/* Linha do Slider */}
-                  <div 
-                    className="absolute top-0 bottom-0 w-1 bg-white shadow-lg"
-                    style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
-                  >
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
-                      <div className="flex gap-0.5">
-                        <ChevronDown className="w-4 h-4 text-primary rotate-90" />
-                        <ChevronDown className="w-4 h-4 text-primary -rotate-90" />
-                      </div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center">
+                    <div className="flex gap-0.5">
+                      <ChevronDown className="w-4 h-4 text-primary rotate-90" />
+                      <ChevronDown className="w-4 h-4 text-primary -rotate-90" />
                     </div>
                   </div>
                 </div>
-                
-                <p className="text-center text-white/50 text-sm mb-4">← Arraste para comparar →</p>
-                
-                {/* Toggle entre looks */}
-                <div className="flex gap-3">
-                  {outfits.map((outfit, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setActiveOutfit(index)}
-                      className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all ${
-                        activeOutfit === index
-                          ? 'bg-white text-primary'
-                          : 'bg-white/10 text-white/70 hover:bg-white/20'
-                      }`}
-                    >
-                      {outfit.label}
-                    </button>
-                  ))}
-                </div>
               </div>
-            </div>
-          </div>
-          
-          {/* Seta conectando */}
-          <div className="hidden lg:flex justify-center -mt-4 mb-4">
-            <div className="flex items-center gap-4 text-white/50">
-              <div className="w-32 h-[2px] bg-gradient-to-r from-transparent to-white/30" />
-              <ArrowRight className="w-6 h-6 text-white/50" />
-              <div className="w-32 h-[2px] bg-gradient-to-l from-transparent to-white/30" />
+              
+              <p className="text-center text-white/50 text-sm mb-4">← Arraste para comparar →</p>
+              
+              {/* Toggle entre looks */}
+              <div className="flex gap-3">
+                {outfits.map((outfit, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveOutfit(index)}
+                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                      activeOutfit === index
+                        ? 'bg-white text-primary'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20'
+                    }`}
+                  >
+                    {outfit.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </AnimatedText>
         
-        {/* Steps */}
+        {/* Steps - 3 passos */}
         <div className="grid md:grid-cols-3 gap-6">
           {steps.map((item, index) => (
             <AnimatedText key={index} delay={index * 0.15}>
@@ -822,8 +765,8 @@ function WhatMakesUsUnique() {
 function Integrations() {
   const integrations = [
     { name: 'Shopify', logo: '/logos/shopify.svg', isIcon: false },
-    { name: 'Nuvemshop', logo: '/logos/nuvemshop.svg', isIcon: false },
-    { name: 'VTEX', logo: '/logos/vtex.svg', isIcon: false },
+    { name: 'Nuvemshop', logo: '/logos/nuvemshop.png', isIcon: false },
+    { name: 'VTEX', logo: '/logos/vtex.png', isIcon: false },
     { name: 'Código Próprio', logo: null, isIcon: true },
   ]
   
@@ -1000,7 +943,6 @@ export default function Home() {
       <Header />
       <Hero />
       <HowItWorks />
-      <VideoSection />
       <WhatWeDo />
       <Solutions />
       <ImpactROI />
